@@ -28,9 +28,9 @@ def send_request(source_text):
 def save_request(data):
     translation = Translation(
         source_text=data['text'],
-        translated_text='requested',
+        translated_text='-',
         uid=data['uid'],
-        status=data['status'],
+        status='requested',
     )
     db.session.add(translation)
     db.session.commit()
@@ -40,20 +40,21 @@ def save_request(data):
 def get_periodic_request():
     translations = Translation.query.all()
 
-    for translation in translations:
-        tr_check_url = Config.URL + translation.uid
-        response = requests.get(tr_check_url, headers=Config.HEADERS)
-        if response.status_code == 200:
-            data = response.json()
-            if data['status'] == 'completed':
-                update_request.delay(data['uid'], 'translated', data['translatedText'])
-            elif data['status'] == 'translating':
-                update_request.delay(data['uid'], 'pending', data['translatedText'])
+    if translations:
+        for translation in translations:
+            tr_check_url = Config.URL + translation.uid
+            response = requests.get(tr_check_url, headers=Config.HEADERS)
+            if response.status_code == 200:
+                data = response.json()
+                if data['status'] == 'completed':
+                    update_request.delay(data['uid'], 'translated', data['translatedText'])
+                elif data['status'] == 'translating':
+                    update_request.delay(data['uid'], 'pending')
 
 
 @celery.task
-def update_request(uid, status, text):
+def update_request(uid, status, translated_text='-'):
     translation = Translation.query.filter_by(uid=uid).first()
     translation.status = status
-    translation.translated_text = text
+    translation.translated_text = translated_text
     db.session.commit()
