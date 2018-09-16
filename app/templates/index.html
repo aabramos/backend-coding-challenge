@@ -5,4 +5,21 @@
     <form action="" method="post" novalidate>
         {{ form.input_field }}{{ form.submit }}
     </form>
+    <table>
+        <tr>
+            <th>Identification</th>
+            <th>Status</th>
+            <th>Original Text</th>
+            <th>Translation to Spanish (ES)</th>
+        </tr>
+        {% for translation in translations %}
+        <tr>
+            <td>{{ translation.uid }}</td>
+            <td>{{ translation.status }}</td>
+            <td>{{ translation.source_text }}</td>
+            <td>{{ translation.translated_text }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
 {% endblock %}

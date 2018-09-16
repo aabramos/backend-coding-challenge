@@ -2,13 +2,19 @@ from flask import render_template, make_response,\
     request, redirect, url_for
 from flask_restful import Resource
 from app.forms import UnbabelForm
+from app.models import Translation
 
 
 class Index(Resource):
     def get(self):
         headers = {'Content-Type': 'text/html'}
         form = UnbabelForm()
-        return make_response(render_template('index.html', title='Unbabel Coding Challenge', form=form), 200, headers)
+        translations = Translation.query.all()
+        return make_response(
+            render_template('index.html', title='Unbabel Coding Challenge', form=form, translations=translations),
+            200,
+            headers,
+        )
 
     def post(self):
         input_text = request.form.get('input_field')
