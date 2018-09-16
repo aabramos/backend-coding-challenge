@@ -21,8 +21,9 @@
 2. Development of forms.py **[OK]**
 3. Development of models.py **[OK]**
 4. Implementing of database migrations **[OK]**
-5. Development of views.py
+5. Development of views.py 5. Development of views.py **[OK]**
+6. Unit tests
 
-#### Resources
+####  Resources
 * Unbabel's API: http://developers.unbabel.com/
 
