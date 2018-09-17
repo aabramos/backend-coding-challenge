@@ -4,6 +4,7 @@ class Config(object):
     DEBUG = True
     TESTING = True
     SECRET_KEY = '86xd8Zx94xd7x12o}x18f28f517xbf14c9ba1bx81b888ui1ortbb4'
+    HOME_URL = 'localhost'
 
     POSTGRES = {
         'user': 'postgres',
@@ -30,7 +31,10 @@ class Config(object):
     }
 
     # Unbabel API
-    URL = 'https://sandbox.unbabel.com/tapi/v2/translation/'
+    UNBABEL_SANDBOX_USERNAME = 'fullstack-challenge'
+    UNBABEL_SANDBOX_KEY = '9db71b322d43a6ac0f681784ebdcc6409bb83359'
+
+    UNBABEL_SANDBOX_URL = 'https://sandbox.unbabel.com/tapi/v2/translation/'
     HEADERS = {
         'Authorization': 'ApiKey fullstack-challenge:9db71b322d43a6ac0f681784ebdcc6409bb83359',
         'Content-Type': 'application/json',
