@@ -38,10 +38,10 @@ def create_app(config_class=Config):
     app.config.from_object(config_class)
     database_init(app)
 
-    from app.views import Index
+    from app.home.views import Index
     api.add_resource(Index, '/')
 
     return app
 
 
-from app import models
+from app.home import models

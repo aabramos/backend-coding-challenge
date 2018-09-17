@@ -3,7 +3,7 @@
 
 import app
 from database import db
-from app.models import Translation
+from app.home.models import Translation
 
 app = app.create_app()
 
