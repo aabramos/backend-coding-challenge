@@ -1,35 +1,38 @@
-import requests
 from flask import flash
 from app import make_celery
 from app.models import Translation
+from unbabel.api import UnbabelApi
 from database import db
 from config import Config
 
 celery = make_celery()
+api = UnbabelApi(
+    username=Config.UNBABEL_SANDBOX_USERNAME,
+    api_key=Config.UNBABEL_SANDBOX_KEY,
+    sandbox=True,
+)
 
 
 @celery.task
-def send_request(source_text):
-    payload = {
-        'text': source_text,
-        'source_language': 'en',
-        'target_language': 'es',
-        'text_format': 'text',
-    }
-    response = requests.post(Config.URL, json=payload, headers=Config.HEADERS)
-    if response.status_code == 201:
-        data = response.json()
-        save_request.delay(data)
+def send_request(source_text, source_language, target_language):
+    response = api.post_translations(
+        text=source_text,
+        target_language=target_language,
+        source_language=source_language,
+        callback_url=Config.HOME_URL,
+    )
+    if response:
+        save_request.delay(response.uid, response.text)
     else:
         flash('Error')
         
 
 @celery.task
-def save_request(data):
+def save_request(uid, text):
     translation = Translation(
-        source_text=data['text'],
+        source_text=text,
         translated_text='-',
-        uid=data['uid'],
+        uid=uid,
         status='requested',
     )
     db.session.add(translation)
@@ -42,14 +45,13 @@ def get_periodic_request():
 
     if translations:
         for translation in translations:
-            tr_check_url = Config.URL + translation.uid
-            response = requests.get(tr_check_url, headers=Config.HEADERS)
-            if response.status_code == 200:
-                data = response.json()
-                if data['status'] == 'completed':
-                    update_request.delay(data['uid'], 'translated', data['translatedText'])
-                elif data['status'] == 'translating':
-                    update_request.delay(data['uid'], 'pending')
+            data = api.get_translation(translation.uid)
+
+            if data:
+                if data.status == 'completed':
+                    update_request.delay(data.uid, 'translated', data.translation,)
+                elif data.status == 'translating':
+                    update_request.delay(data.uid, 'pending')
 
 
 @celery.task

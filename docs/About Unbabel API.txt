@@ -1,0 +1,6 @@
+The original Unbabel-py Api is currently not compatible with Python 3.6, which is used by this project.
+The solution was to make a fork from the original project:
+https://github.com/aabramos/unbabel-py
+
+That fork contains a slightly customized version of the Unbabel-py Api that works with Python 3.6.
+That custom version is replicated under the /unbabel/ folder, exclusively for this challenge.

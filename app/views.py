@@ -3,6 +3,7 @@ from flask import render_template, make_response,\
 from flask_restful import Resource
 from app.forms import UnbabelForm
 from app.models import Translation
+from config import Config
 
 
 class Index(Resource):
@@ -11,7 +12,7 @@ class Index(Resource):
         form = UnbabelForm()
         translations = Translation.query.all()
         return make_response(
-            render_template('index.html', title='Unbabel Coding Challenge', form=form, translations=translations),
+            render_template('index.html', title='Unbabel Coding Challenge', form=form, translations=translations,),
             200,
             headers,
         )
@@ -20,6 +21,6 @@ class Index(Resource):
         input_text = request.form.get('input_field')
 
         from app.tasks import send_request
-        send_request.delay(input_text)
+        send_request.delay(input_text, Config.SOURCE_LANGUAGE, Config.TARGET_LANGUAGE,)
 
         return redirect(url_for('index'))
