@@ -11,7 +11,7 @@ class Index(Resource):
     def get(self):
         headers = {'Content-Type': 'text/html'}
         form = UnbabelForm()
-        translations = Translation.query.filter(func.length(Translation.translated_text)).all()
+        translations = Translation.query.order_by(func.length(Translation.translated_text)).all()
         return make_response(
             render_template('index.html', title='Unbabel Coding Challenge', form=form, translations=translations,),
             200,
