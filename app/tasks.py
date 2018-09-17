@@ -1,4 +1,3 @@
-import requests
 from flask import flash
 from app import make_celery
 from app.models import Translation
@@ -22,19 +21,18 @@ def send_request(source_text, source_language, target_language):
         source_language=source_language,
         callback_url=Config.HOME_URL,
     )
-    #response = requests.post(Config.UNBABEL_SANDBOX_URL, json=payload, headers=Config.HEADERS)
     if response:
-        save_request.delay(response)
+        save_request.delay(response.uid, response.text)
     else:
         flash('Error')
         
 
 @celery.task
-def save_request(data):
+def save_request(uid, text):
     translation = Translation(
-        source_text=data.text,
+        source_text=text,
         translated_text='-',
-        uid=data.uid,
+        uid=uid,
         status='requested',
     )
     db.session.add(translation)
@@ -47,11 +45,8 @@ def get_periodic_request():
 
     if translations:
         for translation in translations:
-            #tr_check_url = Config.UNBABEL_SANDBOX_URL + translation.uid
-
             data = api.get_translation(translation.uid)
 
-            #data = requests.get(tr_check_url, headers=Config.HEADERS)
             if data:
                 if data.status == 'completed':
                     update_request.delay(data.uid, 'translated', data.translation,)

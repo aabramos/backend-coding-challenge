@@ -5,6 +5,8 @@ class Config(object):
     TESTING = True
     SECRET_KEY = '86xd8Zx94xd7x12o}x18f28f517xbf14c9ba1bx81b888ui1ortbb4'
     HOME_URL = 'localhost'
+    SOURCE_LANGUAGE = 'en'
+    TARGET_LANGUAGE = 'es'
 
     POSTGRES = {
         'user': 'postgres',

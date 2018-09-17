@@ -1,3 +1,6 @@
+# Disclaimer: This is a slightly customized Unbabel API to make it compatible with Python 3.6
+# check /docs/ for more detais.
+
 import json
 import logging
 import os
@@ -241,7 +244,7 @@ class UnbabelApi(object):
     def post_translations(self, text, target_language, source_language=None, type=None, tone=None, visibility=None,
                           public_url=None, callback_url=None, topics=None, instructions=None, uid=None,
                           text_format="text", target_text=None, origin=None, client_owner_email=None, context=None):
-        data = {k: v for k, v in locals().iteritems() if not v in (self, None)}
+        data = {k: v for k, v in locals().items() if not v in (self, None)}
 
         if self.is_bulk:
             self.bulk_data.append(data)
@@ -252,7 +255,7 @@ class UnbabelApi(object):
     def post_mt_translations(self, text, target_language, source_language=None, tone=None, callback_url=None,
                              topics=None, instructions=None, uid=None, text_format="text", origin=None,
                              client_owner_email=None):
-        data = {k: v for k, v in locals().iteritems() if not v in (self, None)}
+        data = {k: v for k, v in locals().items() if not v in (self, None)}
 
         result = requests.post("%smt_translation/" % self.api_url,
                                headers=self.headers, data=json.dumps(data))
