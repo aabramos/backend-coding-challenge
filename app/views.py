@@ -1,6 +1,7 @@
 from flask import render_template, make_response,\
     request, redirect, url_for
 from flask_restful import Resource
+from sqlalchemy import func
 from app.forms import UnbabelForm
 from app.models import Translation
 from config import Config
@@ -10,7 +11,7 @@ class Index(Resource):
     def get(self):
         headers = {'Content-Type': 'text/html'}
         form = UnbabelForm()
-        translations = Translation.query.all()
+        translations = Translation.query.filter(func.length(Translation.translated_text)).all()
         return make_response(
             render_template('index.html', title='Unbabel Coding Challenge', form=form, translations=translations,),
             200,

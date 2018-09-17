@@ -1,4 +1,5 @@
 from flask import flash
+from sqlalchemy import and_
 from app import make_celery
 from app.models import Translation
 from unbabel.api import UnbabelApi
@@ -41,7 +42,10 @@ def save_request(uid, text):
 
 @celery.task
 def get_periodic_request():
-    translations = Translation.query.all()
+    translations = Translation.query.filter(and_(
+        Translation.status == 'completed',
+        Translation.status == 'translating',
+    )).all()
 
     if translations:
         for translation in translations:
