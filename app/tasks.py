@@ -1,3 +1,6 @@
+# !/usr/bin/python
+# -*- coding: utf-8 -*-
+
 from flask import flash
 from sqlalchemy import or_
 from app import make_celery
