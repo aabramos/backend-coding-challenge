@@ -1,8 +1,11 @@
-from flask import flash
+# !/usr/bin/python
+# -*- coding: utf-8 -*-
+
+from sqlalchemy import or_
 from app import make_celery
-from app.models import Translation
+from app.home.models import Translation
 from unbabel.api import UnbabelApi
-from database import db
+from app.database import db
 from config import Config
 
 celery = make_celery()
@@ -23,8 +26,6 @@ def send_request(source_text, source_language, target_language):
     )
     if response:
         save_request.delay(response.uid, response.text)
-    else:
-        flash('Error')
         
 
 @celery.task
@@ -41,17 +42,25 @@ def save_request(uid, text):
 
 @celery.task
 def get_periodic_request():
-    translations = Translation.query.all()
+    translations = Translation.query.filter(or_(
+        Translation.status == 'requested',
+        Translation.status == 'pending',
+    )).all()
 
-    if translations:
-        for translation in translations:
-            data = api.get_translation(translation.uid)
+    try:
+        if translations:
+            for translation in translations:
+                data = api.get_translation(translation.uid)
 
-            if data:
-                if data.status == 'completed':
-                    update_request.delay(data.uid, 'translated', data.translation,)
-                elif data.status == 'translating':
-                    update_request.delay(data.uid, 'pending')
+                if data:
+                    if data.status == 'completed':
+                        update_request.delay(data.uid, 'translated', data.translation,)
+                    elif data.status == 'translating':
+                        update_request.delay(data.uid, 'pending')
+    except Exception as e:
+        log.exception("Error decoding get language pairs")
+        raise e
+
 
 
 @celery.task
