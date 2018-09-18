@@ -5,7 +5,7 @@ from flask import Flask
 from flask_restful import Api
 from celery import Celery
 from config import Config
-from database import database_init
+from app.database import database_init
 
 CELERY_TASK_LIST = [
     'app.tasks'
@@ -44,4 +44,9 @@ def create_app(config_class=Config):
     return app
 
 
+# Import for migrations
 from app.home import models
+
+__version_info__ = '1.0'
+__author__ = 'Adriano Alberto Borges Ramos'
+__email__ = 'adriano@teacherivy.com'

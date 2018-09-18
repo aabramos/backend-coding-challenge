@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h2>Translate text to English (EN)</h2>
+    <h2>Translate text from English (EN) to Spanish (ES)</h2>
     <form action="" method="post" novalidate>
         {{ form.input_field }}{{ form.submit }}
     </form>
@@ -13,7 +13,6 @@
                 <th>Original Text</th>
                 <th>Translation to Spanish (ES)</th>
             </tr>
-
                 <hr>
                 {% for translation in translations %}
                     <tr>
