@@ -26,4 +26,5 @@ class Index(Resource):
 
         from app.tasks import send_request
         send_request.delay(input_text, Config.SOURCE_LANGUAGE, Config.TARGET_LANGUAGE,)
+
         return redirect(url_for('index'))

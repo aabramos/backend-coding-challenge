@@ -6,4 +6,5 @@ migrations/
 venv/
 
 # Logs
-celerybeat-schedule
+/.env
+/celerybeat-schedule
