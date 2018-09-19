@@ -1,21 +1,24 @@
 # !/usr/bin/python
 # -*- coding: utf-8 -*-
+import os
+from dotenv import load_dotenv
+load_dotenv()
 
 
 class Config(object):
     DEBUG = True
     TESTING = True
-    SECRET_KEY = '86xd8Zx94xd7x12o}x18f28f517xbf14c9ba1bx81b888ui1ortbb4'
+    SECRET_KEY = os.environ.get("SECRET_KEY")
     HOME_URL = 'localhost'
     SOURCE_LANGUAGE = 'en'
     TARGET_LANGUAGE = 'es'
 
     POSTGRES = {
-        'user': 'postgres',
-        'pw': 'postgres',
-        'db': 'unbabel_database',
-        'host': 'localhost',
-        'port': '5432',
+        'user': os.environ.get("POSTGRES_USER"),
+        'pw': os.environ.get("POSTGRES_PW"),
+        'db': os.environ.get("POSTGRES_DB"),
+        'host': os.environ.get("POSTGRES_HOST"),
+        'port': os.environ.get("POSTGRES_PORT"),
     }
     # SQLAlchemy
     SQLALCHEMY_DATABASE_URI = 'postgresql://%(user)s:%(pw)s@%(host)s:%(port)s/%(db)s' % POSTGRES
@@ -35,11 +38,6 @@ class Config(object):
     }
 
     # Unbabel API
-    UNBABEL_SANDBOX_USERNAME = 'fullstack-challenge'
-    UNBABEL_SANDBOX_KEY = '9db71b322d43a6ac0f681784ebdcc6409bb83359'
-
+    UNBABEL_SANDBOX_USERNAME = os.environ.get("SANDBOX_USERNAME")
+    UNBABEL_SANDBOX_KEY = os.environ.get("SANDBOX_KEY")
     UNBABEL_SANDBOX_URL = 'https://sandbox.unbabel.com/tapi/v2/translation/'
-    HEADERS = {
-        'Authorization': 'ApiKey fullstack-challenge:9db71b322d43a6ac0f681784ebdcc6409bb83359',
-        'Content-Type': 'application/json',
-    }

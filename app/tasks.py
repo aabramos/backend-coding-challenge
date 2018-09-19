@@ -58,9 +58,7 @@ def get_periodic_request():
                     elif data.status == 'translating':
                         update_request.delay(data.uid, 'pending')
     except Exception as e:
-        log.exception("Error decoding get language pairs")
         raise e
-
 
 
 @celery.task
