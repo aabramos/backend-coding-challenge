@@ -9,6 +9,7 @@ load_dotenv()
 class Config(object):
     DEBUG = True
     TESTING = True
+    WTF_CSRF_ENABLED = True
     SECRET_KEY = os.environ.get("SECRET_KEY")
     HOME_URL = 'localhost'
     SOURCE_LANGUAGE = 'en'
@@ -27,7 +28,7 @@ class Config(object):
 
     # Redis
     LISTEN = ['default']
-    REDISTOGO_URL = 'redis://localhost:6379'
+    REDISTOGO_URL = os.environ.get("POSTGRES_HOST") or 'redis://localhost:6379'
 
     # To start celery worker and beater:
     # celery -A app.tasks worker -B --loglevel=info
