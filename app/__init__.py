@@ -7,6 +7,7 @@ from celery import Celery
 from config import Config
 from database import database_init
 
+
 CELERY_TASK_LIST = [
     'app.tasks'
 ]

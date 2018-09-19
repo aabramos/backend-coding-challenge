@@ -8,7 +8,7 @@ load_dotenv()
 
 class Config(object):
     DEBUG = True
-    TESTING = True
+    TESTING = False
     WTF_CSRF_ENABLED = True
     SECRET_KEY = os.environ.get("SECRET_KEY")
     HOME_URL = 'localhost'
@@ -43,3 +43,9 @@ class Config(object):
     UNBABEL_SANDBOX_USERNAME = os.environ.get("SANDBOX_USERNAME")
     UNBABEL_SANDBOX_KEY = os.environ.get("SANDBOX_KEY")
     UNBABEL_SANDBOX_URL = 'https://sandbox.unbabel.com/tapi/v2/translation/'
+
+
+class TestConfig(Config):
+    TESTING = True
+    DEBUG = False
+    WTF_CSRF_ENABLED = False
