@@ -5,7 +5,7 @@ from sqlalchemy import or_
 from app import make_celery
 from app.home.models import Translation
 from unbabel.api import UnbabelApi
-from app.database import db
+from database import db
 from config import Config
 
 celery = make_celery()

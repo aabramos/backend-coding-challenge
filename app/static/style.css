@@ -1,0 +1,27 @@
+.form-top{
+    padding: 40px 0 20px 0;
+}
+
+.form-fields {
+    margin 0 auto;
+    float: none;
+}
+
+.submit {
+    margin-left: 15px;
+}
+
+.table {
+    border-radius: 5px;
+    width: 70%;
+    margin: 0 auto;
+    float: none;
+}
+
+.table td {
+    text-align: center;
+}
+
+.table th {
+    text-align: center;
+}

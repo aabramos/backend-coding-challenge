@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import app
-from app.database import db
+from database import db
 from app.home.models import Translation
 
 app = app.create_app()

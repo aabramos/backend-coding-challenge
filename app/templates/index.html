@@ -1,21 +1,24 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h2>Translate text from English (EN) to Spanish (ES)</h2>
-    <form action="" method="post" novalidate>
-        {{ form.input_field }}{{ form.submit }}
+    <h2 class="text-center text-light">Translate text from English (EN) to Spanish (ES)</h2>
+    <form action="" method="post">
+        <div class="form-group text-center form-top">
+            {{ form.input_field(class_="bg-light text-secondary") }}
+            {{ form.submit(class_="btn bg-light submit") }}
+        </div>
     </form>
     {% if translations %}
-        <table>
+        <table class="table table-dark table-striped table-hover">
             <tr>
-                <th>Identification</th>
-                <th>Status</th>
-                <th>Original Text</th>
-                <th>Translation to Spanish (ES)</th>
+                <th scope="col">Identification</th>
+                <th scope="col">Status</th>
+                <th scope="col">Original Text</th>
+                <th scope="col">Translation to Spanish (ES)</th>
             </tr>
                 <hr>
                 {% for translation in translations %}
-                    <tr>
+                    <tr scope="row">
                         <td>{{ translation.uid }}</td>
                         <td>{{ translation.status }}</td>
                         <td>{{ translation.source_text }}</td>

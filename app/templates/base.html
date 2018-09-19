@@ -1,17 +1,20 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <!-- Required meta tags -->
         <meta charset="utf-8">
         <meta name="description" content="Unbabel Backend Coding Challenge">
         <meta name="author" content="Adriano Alberto Borges Ramos">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
         {% block head %}
             <title>{{ title }}</title>
         {% endblock %}
     </head>
-    <body>
-        <h1>{{ title }}</h1>
-        <hr>
+    <body class="bg-dark">
+        <h1 class="text-center text-light form-top"><strong>{{ title }}</strong></h1>
         {% block content %}
         {% endblock %}
     </body>
