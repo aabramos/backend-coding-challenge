@@ -1,7 +1,7 @@
 # !/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from app.database import db
+from database import db
 
 
 class Translation(db.Model):

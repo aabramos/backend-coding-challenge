@@ -5,7 +5,7 @@ from flask import Flask
 from flask_restful import Api
 from celery import Celery
 from config import Config
-from app.database import database_init
+from database import database_init
 
 CELERY_TASK_LIST = [
     'app.tasks'
