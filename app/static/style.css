@@ -7,6 +7,10 @@
     float: none;
 }
 
+.submit {
+    margin-left: 15px;
+}
+
 .table {
     border-radius: 5px;
     width: 70%;

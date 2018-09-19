@@ -4,8 +4,8 @@
     <h2 class="text-center text-light">Translate text from English (EN) to Spanish (ES)</h2>
     <form action="" method="post">
         <div class="form-group text-center form-top">
-            {{ form.input_field }}
-            {{ form.submit }}
+            {{ form.input_field(class_="bg-light text-secondary") }}
+            {{ form.submit(class_="btn bg-light submit") }}
         </div>
     </form>
     {% if translations %}
