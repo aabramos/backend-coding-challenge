@@ -38,10 +38,10 @@ def create_app(config_class=Config):
     app = Flask(__name__)
     api = Api(app)
     csrf = CSRFProtect()
+
     app.config.from_object(config_class)
     database_init(app)
     csrf.init_app(app)
-
 
     from app.home.views import Index
     api.add_resource(Index, '/')
