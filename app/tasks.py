@@ -26,6 +26,8 @@ def send_request(source_text, source_language, target_language):
     )
     if response:
         save_request.delay(response.uid, response.text)
+
+    return response.text
         
 
 @celery.task

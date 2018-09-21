@@ -2,9 +2,16 @@
 .idea/
 __pycache__/
 app/__pycache__/
-migrations/
-venv/
+/migrations/
+/venv/
+/dist/
+/build/
+/backend_Coding_Challenge.egg-info/
 
 # Logs
-/.env
 /celerybeat-schedule
+
+# Local env files
+/.env
+
+

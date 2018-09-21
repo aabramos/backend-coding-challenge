@@ -8,7 +8,8 @@ load_dotenv()
 
 class Config(object):
     DEBUG = True
-    TESTING = True
+    TESTING = False
+    WTF_CSRF_ENABLED = True
     SECRET_KEY = os.environ.get("SECRET_KEY")
     HOME_URL = 'localhost'
     SOURCE_LANGUAGE = 'en'
@@ -27,7 +28,7 @@ class Config(object):
 
     # Redis
     LISTEN = ['default']
-    REDISTOGO_URL = 'redis://localhost:6379'
+    REDISTOGO_URL = os.environ.get("REDISTOGO_URL") or 'redis://localhost:6379'
 
     # To start celery worker and beater:
     # celery -A app.tasks worker -B --loglevel=info
@@ -37,8 +38,16 @@ class Config(object):
             'schedule': 15.0,
         }
     }
+    CELERY_RESULT_BACKEND = os.environ.get("CELERY_RESULT_BACKEND") or 'redis://localhost:6379'
 
     # Unbabel API
     UNBABEL_SANDBOX_USERNAME = os.environ.get("SANDBOX_USERNAME")
     UNBABEL_SANDBOX_KEY = os.environ.get("SANDBOX_KEY")
     UNBABEL_SANDBOX_URL = 'https://sandbox.unbabel.com/tapi/v2/translation/'
+
+
+class TestConfig(Config):
+    TESTING = True
+    DEBUG = False
+    WTF_CSRF_ENABLED = False
+    CELERY_ALWAYS_EAGER = True
