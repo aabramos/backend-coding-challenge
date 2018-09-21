@@ -3,6 +3,7 @@
 
 from flask import Flask
 from flask_restful import Api
+from flask_wtf.csrf import CSRFProtect
 from celery import Celery
 from config import Config
 from database import database_init
@@ -36,8 +37,11 @@ def make_celery(app=None):
 def create_app(config_class=Config):
     app = Flask(__name__)
     api = Api(app)
+    csrf = CSRFProtect()
     app.config.from_object(config_class)
     database_init(app)
+    csrf.init_app(app)
+
 
     from app.home.views import Index
     api.add_resource(Index, '/')

@@ -2,11 +2,10 @@
 # -*- coding: utf-8 -*-
 
 import app
-import os
 from database import db
 from app.home.models import Translation
 
-app = app.create_app(os.getenv("FLASK_ENV"))
+app = app.create_app()
 
 
 @app.shell_context_processor
