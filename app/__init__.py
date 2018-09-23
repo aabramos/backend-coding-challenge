@@ -58,7 +58,14 @@ def background_thread():
     with app.test_request_context():
         while True:
             socketio.sleep(2)
-            translations = Translation.query.order_by(func.length(Translation.translated_text)).all()
+            translations = Translation.query.with_entities(
+                    Translation.source_text,
+                    Translation.translated_text,
+                    Translation.status,
+                ).order_by(
+                    func.length(Translation.translated_text)
+                ).all()
+
             if translations:
                 translations_schema = TranslationSchema(many=True)
                 json_data = translations_schema.dump(translations).data

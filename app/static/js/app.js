@@ -22,7 +22,7 @@ $(document).ready(function() {
          var table = _table_.cloneNode(false),
              columns = addAllColumnHeaders(arr, table);
 
-         for (var i=0, maxi=arr.length; i < maxi; ++i) {
+         for (var i = 0, maxi = arr.length; i < maxi; ++i) {
              var tr = _tr_.cloneNode(false);
 
              for (var j = 0, maxj = columns.length; j < maxj ; ++j) {
@@ -50,6 +50,9 @@ $(document).ready(function() {
              for (var key in arr[i]) {
                  if (arr[i].hasOwnProperty(key) && columnSet.indexOf(key) === -1) {
                      columnSet.push(key);
+                     if (key == 'source_text') key = 'Source Text';
+                     if (key == 'translated_text') key = 'Translated Text';
+                     if (key == 'status') key = 'Status';
                      var th = _th_.cloneNode(false);
                      th.appendChild(document.createTextNode(key));
                      tr.appendChild(th);

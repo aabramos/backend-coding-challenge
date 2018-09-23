@@ -60,8 +60,8 @@ def get_periodic_request():
                         update_request.delay(data.uid, 'translated', data.translation, )
                     elif data.status == 'translating':
                         update_request.delay(data.uid, 'pending')
-    except Exception as e:
-        raise e
+    except api.UnauthorizedException:
+        print('Please update the username and api key on the .env file.')
 
 
 @celery.task
