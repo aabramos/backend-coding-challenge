@@ -52,3 +52,11 @@ class TestConfig(Config):
     DEBUG = False
     WTF_CSRF_ENABLED = False
     CELERY_ALWAYS_EAGER = True
+
+    POSTGRES = {
+        'user': os.environ.get("POSTGRES_USER_TEST"),
+        'pw': os.environ.get("POSTGRES_PW_TEST"),
+        'db': os.environ.get("POSTGRES_DB_TEST"),
+        'host': os.environ.get("POSTGRES_HOST_TEST"),
+        'port': os.environ.get("POSTGRES_PORT_TEST"),
+    }

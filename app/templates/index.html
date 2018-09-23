@@ -8,9 +8,11 @@
             {{ form.input_field(class_="bg-light text-secondary") }}
             {{ form.submit(class_="btn bg-secondary submit") }}
         </div>
+        <div id="note" class="text-center text-light">After submit, your translation will be
+            automatically queued below.</div>
     </form>
     {{ form.csrf_token() }}
-    <hr>
     <div id="rt-table"></div>
     <hr>
+    <div class="text-center text-light">By Adriano Alberto Borges Ramos</div>
 {% endblock %}
