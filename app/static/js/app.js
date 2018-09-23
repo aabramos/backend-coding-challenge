@@ -1,23 +1,22 @@
 $(document).ready(function() {
-    // Use a "/test" namespace.
+    // Use a "/unbabel" namespace.
     // An application can open a connection on multiple namespaces, and
     // Socket.IO will multiplex all those connections on a single
-    // physical channel. If you don't care about multiple channels, you
-    // can set the namespace to an empty string.
-    namespace = '/test';
+    // physical channel.
+    namespace = '/unbabel';
 
     // Connect to the Socket.IO server.
     // The connection URL has the following format:
     //     http[s]://<domain>:<port>[/<namespace>]
     var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port + namespace);
 
+    // Builds the HTML Table out of json data.
     var _table_ = document.createElement('table'),
     _tr_ = document.createElement('tr'),
     _th_ = document.createElement('th'),
     _td_ = document.createElement('td');
     _table_.className = 'table table-dark';
 
-    // Builds the HTML Table out of json data.
      function buildHtmlTable(arr) {
          var table = _table_.cloneNode(false),
              columns = addAllColumnHeaders(arr, table);
@@ -50,6 +49,7 @@ $(document).ready(function() {
              for (var key in arr[i]) {
                  if (arr[i].hasOwnProperty(key) && columnSet.indexOf(key) === -1) {
                      columnSet.push(key);
+                     // Overwrites the table headers
                      if (key == 'source_text') key = 'Source Text';
                      if (key == 'translated_text') key = 'Translated Text';
                      if (key == 'status') key = 'Status';
@@ -72,7 +72,7 @@ $(document).ready(function() {
 
     // Event handler for server sent data.
     // The callback function is invoked whenever the server emits data
-    // to the client. The data is then displayed in the "Received"
+    // to the client. The data is then displayed in the "rt-table"
     // section of the page.
     socket.on('my_response', function(msg) {
         var output = $.parseJSON(msg);

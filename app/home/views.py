@@ -10,6 +10,9 @@ from config import Config
 
 
 class Index(Resource):
+    """
+    Views using flask_restful Api.
+    """
     def get(self):
         headers = {'Content-Type': 'text/html'}
         form = UnbabelForm()
@@ -22,7 +25,9 @@ class Index(Resource):
     def post(self):
         input_text = request.form.get('input_field')
 
+        # Avoiding circular imports
         from app.tasks import send_request
+        # Send translation request on post
         send_request.delay(input_text, Config.SOURCE_LANGUAGE, Config.TARGET_LANGUAGE,)
 
         return redirect(url_for('index'))

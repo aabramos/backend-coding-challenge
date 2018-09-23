@@ -19,6 +19,14 @@ api = UnbabelApi(
 
 @celery.task
 def send_request(source_text, source_language, target_language):
+    """
+    Translate a text using Unbabel API.
+
+    :param source_text: Text submitted by the user.
+    :param source_language: Original language.
+    :param target_language: Target language.
+    :return: The response text from Unbabel.
+    """
     response = api.post_translations(
         text=source_text,
         target_language=target_language,
@@ -33,6 +41,13 @@ def send_request(source_text, source_language, target_language):
 
 @celery.task
 def save_request(uid, text):
+    """
+    Saves the translation request on the database.
+
+    :param uid: returned from Unbabel.
+    :param text: Text submitted by the user.
+    :return: None.
+    """
     translation = Translation(
         source_text=text,
         translated_text='-',
@@ -45,6 +60,10 @@ def save_request(uid, text):
 
 @celery.task
 def get_periodic_request():
+    """
+    Checks every 30 seconds with Unbabel if a translation is ready.
+    :return: None.
+    """
     translations = Translation.query.filter(or_(
         Translation.status == 'requested',
         Translation.status == 'pending',
@@ -66,6 +85,14 @@ def get_periodic_request():
 
 @celery.task
 def update_request(uid, status, translated_text='-'):
+    """
+    Updates the translation.
+
+    :param uid: returned from Unbabel.
+    :param status: translation status.
+    :param translated_text: returned from Unbabel.
+    :return: None.
+    """
     translation = Translation.query.filter_by(uid=uid).first()
     translation.status = status
     translation.translated_text = translated_text

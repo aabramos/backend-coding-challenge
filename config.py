@@ -16,6 +16,7 @@ class Config(object):
     SOURCE_LANGUAGE = 'en'
     TARGET_LANGUAGE = 'es'
 
+    # SQLAlchemy
     POSTGRES = {
         'user': os.environ.get("POSTGRES_USER"),
         'pw': os.environ.get("POSTGRES_PW"),
@@ -23,7 +24,6 @@ class Config(object):
         'host': os.environ.get("POSTGRES_HOST"),
         'port': os.environ.get("POSTGRES_PORT"),
     }
-    # SQLAlchemy
     SQLALCHEMY_DATABASE_URI = 'postgresql://%(user)s:%(pw)s@%(host)s:%(port)s/%(db)s' % POSTGRES
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
@@ -31,12 +31,11 @@ class Config(object):
     LISTEN = ['default']
     REDISTOGO_URL = os.environ.get("REDISTOGO_URL") or 'redis://localhost:6379'
 
-    # To start celery worker and beater:
-    # celery -A app.tasks worker -B --loglevel=info
+    # Celery
     CELERYBEAT_SCHEDULE = {
-        'runs-every-15-seconds': {
+        'runs-every-30-seconds': {
             'task': 'app.tasks.get_periodic_request',
-            'schedule': 15.0,
+            'schedule': 30.0,
         }
     }
     CELERY_RESULT_BACKEND = os.environ.get("CELERY_RESULT_BACKEND") or 'redis://localhost:6379'

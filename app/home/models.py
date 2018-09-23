@@ -17,7 +17,7 @@ class Translation(db.Model):
         self.uid = uid
         self.status = status
 
-
+# Marshmallow schema
 class TranslationSchema(mw.ModelSchema):
     class Meta:
         model = Translation

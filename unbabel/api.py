@@ -1,5 +1,8 @@
-# Disclaimer: This is a slightly customized Unbabel API to make it compatible with Python 3.6
-# check /docs/ for more detais.
+"""
+Disclaimer: This is a slightly customized Unbabel API to make it compatible with Python 3.6
+check /docs/ for more detais.
+"""
+
 
 import json
 import logging

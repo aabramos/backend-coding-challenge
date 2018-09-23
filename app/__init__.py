@@ -13,7 +13,7 @@ from database import database_init
 from app.home.models import Translation, TranslationSchema
 
 
-async_mode = None
+async_mode = 'eventlet'
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -34,6 +34,10 @@ api.add_resource(Index, '/')
 
 
 def make_celery():
+    """
+    Create celery tasks.
+    :return: celery object
+    """
     celery = Celery(app.import_name,
                     broker=Config.REDISTOGO_URL,
                     include=CELERY_TASK_LIST,
@@ -52,9 +56,13 @@ def make_celery():
     return celery
 
 
-# The websocket is maintained in the background, and this
-# function outputs a table for the client every second
+
 def background_thread():
+    """
+    The websocket is maintained in the background, and this
+    function outputs a table for the client every two seconds
+    :return: None.
+    """
     with app.test_request_context():
         while True:
             socketio.sleep(2)
@@ -70,11 +78,11 @@ def background_thread():
                 translations_schema = TranslationSchema(many=True)
                 json_data = translations_schema.dump(translations).data
                 formatted_data = json.dumps(json_data)
-                socketio.emit('my_response', formatted_data, namespace='/test', json=True)
+                socketio.emit('my_response', formatted_data, namespace='/unbabel', json=True)
 
 
 # This function is called when a web browser connects
-@socketio.on('connect', namespace='/test')
+@socketio.on('connect', namespace='/unbabel')
 def test_connect():
     global thread
     with thread_lock:
@@ -84,7 +92,7 @@ def test_connect():
 
 
 # Notification that a client has disconnected
-@socketio.on('disconnect', namespace='/test')
+@socketio.on('disconnect', namespace='/unbabel')
 def test_disconnect():
     print('Client disconnected', request.sid)
 

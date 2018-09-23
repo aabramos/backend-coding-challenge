@@ -9,6 +9,9 @@ from config import TestConfig
 
 
 class TestCelery(TestCase):
+    """
+        Run this test with celery worker running.
+    """
     SQLALCHEMY_DATABASE_URI = TestConfig.SQLALCHEMY_DATABASE_URI
     SQLALCHEMY_TRACK_MODIFICATIONS = TestConfig.SQLALCHEMY_TRACK_MODIFICATIONS
     TESTING = TestConfig.DEBUG

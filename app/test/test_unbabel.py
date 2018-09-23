@@ -8,7 +8,7 @@ from unbabel.api import UnbabelApi
 from config import TestConfig
 
 
-class BasicTests(TestCase):
+class TestUnbabel(TestCase):
     SQLALCHEMY_DATABASE_URI = TestConfig.SQLALCHEMY_DATABASE_URI
     SQLALCHEMY_TRACK_MODIFICATIONS = TestConfig.SQLALCHEMY_TRACK_MODIFICATIONS
     TESTING = TestConfig.DEBUG
@@ -28,20 +28,24 @@ class BasicTests(TestCase):
             target_language='es',
             source_language='en',
         )
+        # Testing response fields
         self.assertEqual(response.status, 'new')
-        self.assertIsNone(response.translation)
         self.assertTrue(response.uid)
         self.assertEqual(response.target_language, 'es')
         self.assertEqual(response.source_language, 'en')
+
+        # Testing unused fields consistency
+        self.assertIsNone(response.translation)
         self.assertIsNone(response.client)
         self.assertIsNone(response.balance)
         self.assertIsNone(response.order_number)
         self.assertIsNone(response.origin)
-        self.assertTrue(response.price)
-        self.assertEqual(response.text_format, 'text')
         self.assertIsNone(response.price_plan)
         self.assertIsNone(response.topics)
+        self.assertTrue(response.price)
         self.assertEqual(response.translators, [])
+        # Testing formats
+        self.assertEqual(response.text_format, 'text')
         self.assertIn('Test translation', response.text)
 
 

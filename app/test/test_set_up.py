@@ -10,7 +10,7 @@ from config import TestConfig
 
 
 class BasicTests(TestCase):
-    '''
+    """
         This will test the basic setup. After running this test,
         make sure to run:
 
@@ -19,7 +19,7 @@ class BasicTests(TestCase):
 
         To create and apply the database migrations to run the
         other tests.
-    '''
+    """
     SQLALCHEMY_DATABASE_URI = TestConfig.SQLALCHEMY_DATABASE_URI
     SQLALCHEMY_TRACK_MODIFICATIONS = TestConfig.SQLALCHEMY_TRACK_MODIFICATIONS
     TESTING = TestConfig.DEBUG

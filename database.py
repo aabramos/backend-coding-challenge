@@ -11,6 +11,9 @@ mw = Marshmallow()
 
 
 def database_init(app):
+    """
+    Database related inits.
+    """
     db.init_app(app)
     migrate.init_app(app, db)
     mw.init_app(app)

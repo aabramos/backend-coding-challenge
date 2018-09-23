@@ -24,6 +24,7 @@
 5. Development of views.py **[OK]**
 6. Unit tests **[OK]**
 7. Real time table **[OK]**
+8. Documentation **[OK]**
 
 ####  Resources
 * Unbabel's API: http://developers.unbabel.com/
