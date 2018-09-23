@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import unittest
-from app import create_app
+from app import app
 from flask_testing import TestCase
 from unbabel.api import UnbabelApi
 from config import TestConfig
@@ -15,7 +15,7 @@ class BasicTests(TestCase):
     DEBUG = TestConfig.DEBUG
 
     def create_app(self):
-        return create_app(self)
+        return app
 
     def test_unbabelAPI(self):
         api = UnbabelApi(

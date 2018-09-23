@@ -22,7 +22,8 @@
 3. Development of models.py **[OK]**
 4. Implementing of database migrations **[OK]**
 5. Development of views.py **[OK]**
-6. Unit tests
+6. Unit tests **[OK]**
+7. Real time table **[OK]**
 
 ####  Resources
 * Unbabel's API: http://developers.unbabel.com/

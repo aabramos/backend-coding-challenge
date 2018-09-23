@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import unittest
-from app import create_app
+from app import app
 from flask_testing import TestCase
 from app.tasks import send_request
 from config import TestConfig
@@ -16,7 +16,7 @@ class TestCelery(TestCase):
     CELERY_ALWAYS_EAGER = TestConfig.CELERY_ALWAYS_EAGER
 
     def create_app(self):
-        return create_app(self)
+        return app
 
     def setUp(self):
         self.task = send_request.apply_async(args=['Test translation', 'en', 'es'])

@@ -10,6 +10,7 @@ class Config(object):
     DEBUG = True
     TESTING = False
     WTF_CSRF_ENABLED = True
+    USE_RELOADER = False
     SECRET_KEY = os.environ.get("SECRET_KEY")
     HOME_URL = 'localhost'
     SOURCE_LANGUAGE = 'en'

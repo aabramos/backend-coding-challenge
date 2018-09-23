@@ -8,6 +8,7 @@ from unbabel.api import UnbabelApi
 from database import db
 from config import Config
 
+
 celery = make_celery()
 api = UnbabelApi(
     username=Config.UNBABEL_SANDBOX_USERNAME,
@@ -28,7 +29,7 @@ def send_request(source_text, source_language, target_language):
         save_request.delay(response.uid, response.text)
 
     return response.text
-        
+
 
 @celery.task
 def save_request(uid, text):
@@ -56,7 +57,7 @@ def get_periodic_request():
 
                 if data:
                     if data.status == 'completed':
-                        update_request.delay(data.uid, 'translated', data.translation,)
+                        update_request.delay(data.uid, 'translated', data.translation, )
                     elif data.status == 'translating':
                         update_request.delay(data.uid, 'pending')
     except Exception as e:
