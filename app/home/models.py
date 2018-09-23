@@ -1,7 +1,7 @@
 # !/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from database import db
+from database import db, mw
 
 
 class Translation(db.Model):
@@ -16,3 +16,8 @@ class Translation(db.Model):
         self.translated_text = translated_text
         self.uid = uid
         self.status = status
+
+
+class TranslationSchema(mw.ModelSchema):
+    class Meta:
+        model = Translation

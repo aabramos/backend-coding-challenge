@@ -4,9 +4,8 @@
 from flask import render_template, make_response,\
     request, redirect, url_for
 from flask_restful import Resource
-from sqlalchemy import func
 from app.home.forms import UnbabelForm
-from app.home.models import Translation
+from app import socketio
 from config import Config
 
 
@@ -14,9 +13,8 @@ class Index(Resource):
     def get(self):
         headers = {'Content-Type': 'text/html'}
         form = UnbabelForm()
-        translations = Translation.query.order_by(func.length(Translation.translated_text)).all()
         return make_response(
-            render_template('index.html', title='Unbabel Coding Challenge', form=form, translations=translations,),
+            render_template('index.html', title='Unbabel Coding Challenge', form=form, async_mode=socketio.async_mode),
             200,
             headers,
         )

@@ -4,8 +4,12 @@
 from setuptools import setup
 
 setup(
-    name='backend Coding Challenge',
+    name='backend_coding_challenge',
+    author='Adriano Alberto Borges Ramos',
     version='1.0',
-    packages=['app'],
+    packages=['app', 'unbabel'],
     include_package_data=True,
+    install_requires=[
+        'flask',
+    ]
 )

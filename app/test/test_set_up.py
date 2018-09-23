@@ -3,7 +3,7 @@
 
 import unittest
 from database import db
-from app import create_app
+from app import app
 from flask_testing import TestCase
 from flask import current_app, url_for
 from config import TestConfig
@@ -27,7 +27,7 @@ class BasicTests(TestCase):
     WTF_CSRF_ENABLED = TestConfig.WTF_CSRF_ENABLED
 
     def create_app(self):
-        return create_app(self)
+        return app
 
     def setUp(self):
         db.create_all()
