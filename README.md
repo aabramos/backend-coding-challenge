@@ -81,15 +81,15 @@ celery -A app.tasks worker -B --loglevel=info
 And access http://localhost:5000 on your browser.
 
 ### Approach
-- After a translation request is made by submitting the text on the frontend, an Unbabel-py API request is made in the backend, sending a human translation request to The Unbabel server.
+- After a translation request is made by submitting the text on the frontend, an Unbabel-py API request is made in the backend, sending a human translation request to The Unbabel server;
 
 - Note:The folder /Unbabel contains a local customized Unbabel-py API. The original wasn't compatible with Python 3.6. Check out [my fork](https://github.com/aabramos/unbabel-py);
 
-- All requests are made using a job queue, with Celery as the background processor and Redis as the broker.
+- All requests are made using a job queue, with Celery as the background processor and Redis as the broker;
 
 - The first request saves the translation in the database, and the subsequent jobs ask the status of the translation with Unbabel server every 30 seconds, updating the information on the database if necessary;
 
-- The comunication between the frontend and the backend are made with Socket.io, updating the table below the submit field without refreshing the page and sorting the list using the translated messages length.
+- The communication between the frontend and the backend are made with Socket.io, updating the table below the submit field without refreshing the page and sorting the list using the translated messages length.
 
 ### Testing
 Commands:
